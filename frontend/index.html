@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biz Voice AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f4f7fb;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 13px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+
+        .ask-button {
+            background: #222;
+            color: white;
+        }
+
+        .voice-button {
+            background: #e9eef5;
+            color: #222;
+        }
+
+        #status {
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .answer-box {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f4f7fb;
+            border-radius: 12px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>🎙️ Biz Voice AI</h1>
+
+        <p class="subtitle">
+            Your AI-powered business assistant
+        </p>
+
+        <input
+            type="text"
+            id="question"
+            placeholder="Ask a business question..."
+        >
+
+        <div>
+            <button class="ask-button" onclick="askAI()">
+                Ask AI
+            </button>
+
+            <button class="voice-button" onclick="startListening()">
+                🎤 Speak
+            </button>
+        </div>
+
+        <p id="status"></p>
+
+        <div class="answer-box">
+            <p id="answer">Your AI answer will appear here.</p>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
