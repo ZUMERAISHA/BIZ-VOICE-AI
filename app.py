@@ -31,6 +31,17 @@ client = OpenAI(api_key=api_key)
 
 
 # =========================================================
+# PAGE SETTINGS
+# =========================================================
+
+st.set_page_config(
+    page_title="Biz Voice AI",
+    page_icon="🎙️",
+    layout="centered"
+)
+
+
+# =========================================================
 # BUSINESS INFORMATION
 # =========================================================
 
@@ -48,25 +59,12 @@ business_info = {
 
 
 # =========================================================
-# PAGE SETTINGS
-# =========================================================
-
-st.set_page_config(
-    page_title="Biz Voice AI",
-    page_icon="🎙️",
-    layout="centered"
-)
-
-
-# =========================================================
-# DARK ELEGANT DESIGN
+# CUSTOM CSS
 # =========================================================
 
 st.markdown(
     """
     <style>
-
-    /* MAIN BACKGROUND */
 
     .stApp {
         background: linear-gradient(
@@ -75,21 +73,14 @@ st.markdown(
             #151515 50%,
             #0d0d0d 100%
         );
-
         color: #f5f1eb;
     }
-
-
-    /* MAIN CONTAINER */
 
     .block-container {
         max-width: 850px;
         padding-top: 3rem;
         padding-bottom: 3rem;
     }
-
-
-    /* HIDE STREAMLIT DEFAULT ELEMENTS */
 
     #MainMenu {
         visibility: hidden;
@@ -103,8 +94,9 @@ st.markdown(
         visibility: hidden;
     }
 
-
-    /* HERO */
+    h1, h2, h3 {
+        color: #f5f1eb !important;
+    }
 
     .main-title {
         text-align: center;
@@ -127,9 +119,6 @@ st.markdown(
         margin: 18px auto 25px auto;
         border-radius: 10px;
     }
-
-
-    /* BUSINESS CARD */
 
     .business-card {
         background: #191919;
@@ -158,9 +147,6 @@ st.markdown(
         color: #e0b77f;
     }
 
-
-    /* RESPONSE CARD */
-
     .response-card {
         background: #1b1b1b;
         color: #f5f1eb;
@@ -178,8 +164,12 @@ st.markdown(
         margin-bottom: 10px;
     }
 
-
-    /* VOICE TEXT */
+    .response-text {
+        color: #f5f1eb;
+        font-size: 15px;
+        line-height: 1.6;
+        white-space: pre-wrap;
+    }
 
     .voice-text {
         text-align: center;
@@ -187,9 +177,6 @@ st.markdown(
         font-size: 14px;
         margin-top: 12px;
     }
-
-
-    /* BUTTON */
 
     .stButton > button {
         width: 100%;
@@ -208,9 +195,6 @@ st.markdown(
         border-color: #dfb982;
     }
 
-
-    /* TEXT INPUT */
-
     .stTextInput input {
         border-radius: 14px;
         border: 1px solid #403a35;
@@ -228,31 +212,15 @@ st.markdown(
         box-shadow: 0 0 0 1px #c49a63;
     }
 
-
-    /* STREAMLIT HEADINGS */
-
-    h1, h2, h3 {
-        color: #f5f1eb !important;
-    }
-
-
-    /* INFO / WARNING */
-
     .stAlert {
         background: #1b1b1b;
         color: #f5f1eb;
         border-radius: 14px;
     }
 
-
-    /* SPINNER TEXT */
-
     .stSpinner > div {
         color: #d9b887;
     }
-
-
-    /* FOOTER */
 
     .footer-text {
         text-align: center;
@@ -300,35 +268,33 @@ st.write("")
 
 st.subheader("🏢 Business Information")
 
-st.markdown(
-    '<div class="business-card">',
-    unsafe_allow_html=True
-)
+business_html = f"""
+<div class="business-card">
 
-st.markdown(
-    f'<div class="business-name">{business_info["name"]}</div>',
-    unsafe_allow_html=True
-)
+    <div class="business-name">
+        {business_info["name"]}
+    </div>
 
-st.markdown(
-    f'<div class="info-text">🕐 <b>Hours:</b> {business_info["hours"]}</div>',
-    unsafe_allow_html=True
-)
+    <div class="info-text">
+        🕐 <b>Hours:</b> {business_info["hours"]}
+    </div>
 
-st.markdown(
-    f'<div class="info-text">✨ <b>Services:</b> {", ".join(business_info["services"])}</div>',
-    unsafe_allow_html=True
-)
+    <div class="info-text">
+        ✨ <b>Services:</b> {", ".join(business_info["services"])}
+    </div>
 
-st.markdown(
-    f'<div class="info-text">💳 <b>Pricing:</b> {business_info["pricing"]}</div>',
-    unsafe_allow_html=True
-)
+    <div class="info-text">
+        💳 <b>Pricing:</b> {business_info["pricing"]}
+    </div>
 
-st.markdown(
-    '</div>',
-    unsafe_allow_html=True
-)
+</div>
+"""
+
+# IMPORTANT:
+# st.html() is used here so HTML is rendered,
+# not displayed as plain text.
+
+st.html(business_html)
 
 
 # =========================================================
@@ -386,25 +352,31 @@ Pricing: {business_info["pricing"]}
 
 
         # =================================================
-        # AI RESPONSE
+        # AI RESPONSE CARD
         # =================================================
 
-        st.markdown(
-            '<div class="response-card">',
-            unsafe_allow_html=True
+        safe_answer = (
+            answer
+            .replace("&", "&amp;")
+            .replace("<", "&lt;")
+            .replace(">", "&gt;")
         )
 
-        st.markdown(
-            '<div class="response-title">🤖 Biz Voice AI</div>',
-            unsafe_allow_html=True
-        )
+        response_html = f"""
+        <div class="response-card">
 
-        st.write(answer)
+            <div class="response-title">
+                🤖 Biz Voice AI
+            </div>
 
-        st.markdown(
-            '</div>',
-            unsafe_allow_html=True
-        )
+            <div class="response-text">
+                {safe_answer}
+            </div>
+
+        </div>
+        """
+
+        st.html(response_html)
 
         st.markdown(
             '<div class="voice-text">🔊 AI response is being spoken aloud</div>',
